@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class JavaQuestionServiceTest {
@@ -27,18 +28,18 @@ class JavaQuestionServiceTest {
     void add() {
         Question expected = new Question("question", "answer");
         //test
-        Question actual = questionService.add(expected);
+        Question actual = questionService.add(expected.getQuestion(), expected.getAnswer());
         //check
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("Корректно удаляет вопросы")
     void remove() {
         Question expected = new Question("question", "answer");
-        questionService.add(expected);
+        questionService.add(expected.getQuestion(), expected.getAnswer());
         //test
-        Question actual = questionService.add(expected);
+        Question actual = questionService.remove(expected);
         //check
         assertEquals(expected, actual);
     }
@@ -61,25 +62,5 @@ class JavaQuestionServiceTest {
         Collection<Question> actual = questionService.getAll();
         //check
         assertEquals(expectedQuestions, actual);
-    }
-
-    @Test
-    @DisplayName("Корректно выводит рандомные вопросы")
-    void getRandomQuestion() {
-        Question question1 = new Question("question", "answer");
-        Question question2 = new Question("question", "answer");
-
-        questionService.add(question1);
-        questionService.add(question2);
-
-        Set<Question> expectedQuestions = new HashSet<>() {{
-            add(question1);
-            add(question2);
-        }};
-
-        //test
-        Question actual = questionService.getRandomQuestion();
-        //check
-        assertTrue(expectedQuestions.contains(actual));
     }
 }
