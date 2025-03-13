@@ -41,7 +41,7 @@ class JavaQuestionServiceTest {
         //test
         Question actual = questionService.remove(expected);
         //check
-        assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
