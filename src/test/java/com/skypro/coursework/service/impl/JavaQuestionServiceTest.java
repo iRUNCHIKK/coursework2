@@ -39,9 +39,13 @@ class JavaQuestionServiceTest {
         Question expected = new Question("question", "answer");
         questionService.add(expected.getQuestion(), expected.getAnswer());
         //test
+        Set<Question> questionsBefore = (Set<Question>) questionService.getAll();
+        assertTrue(questionsBefore.contains(expected));
         Question actual = questionService.remove(expected);
         //check
         assertThat(actual).isEqualTo(expected);
+        Set<Question> questionsAfter = (Set<Question>) questionService.getAll();
+        assertFalse(questionsAfter.contains(expected));
     }
 
     @Test
